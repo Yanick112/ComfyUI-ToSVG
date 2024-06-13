@@ -12,7 +12,9 @@ Welcome to the unofficial implementation of the ComfyUI for VTracer. This projec
 - Converts tensors back to PIL images.
 - Provides a class `ConvertRasterToVector` to handle the conversion of raster images to SVG format with various parameters for customization.
 - Includes a class `SaveSVG` to save the resulting SVG data into files.
-
+examples/截图_20240613204507.png
+examples/截图_20240613204541.png
+examples/截图_20240613204644.png
 ### Contributing
 
 Contributions to this project are welcome. Please feel free to submit pull requests or create issues for any bugs or feature requests.
