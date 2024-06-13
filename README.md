@@ -33,7 +33,7 @@ Welcome to the unofficial implementation of the ComfyUI for VTracer. This projec
 
 ### What's next?
 
-[] Add SVG preview node
+- [ ] Add SVG preview node
 
 ### Contributing
 
