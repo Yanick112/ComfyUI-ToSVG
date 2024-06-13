@@ -1,0 +1,665 @@
+{
+  "last_node_id": 48,
+  "last_link_id": 77,
+  "nodes": [
+    {
+      "id": 26,
+      "type": "ModelSamplingSD3",
+      "pos": [
+        620,
+        380
+      ],
+      "size": {
+        "0": 220,
+        "1": 60
+      },
+      "flags": {
+        "collapsed": false
+      },
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 31,
+          "label": "model"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            41
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "MODEL"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ModelSamplingSD3"
+      },
+      "widgets_values": [
+        3
+      ]
+    },
+    {
+      "id": 33,
+      "type": "VAEDecode",
+      "pos": [
+        1120,
+        380
+      ],
+      "size": {
+        "0": 140,
+        "1": 60
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 38,
+          "label": "Latent"
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 39,
+          "label": "VAE"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            46
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      }
+    },
+    {
+      "id": 31,
+      "type": "CLIPTextEncode",
+      "pos": [
+        440,
+        760
+      ],
+      "size": {
+        "0": 400,
+        "1": 200
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 49,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            52
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "(worst quality:1.3), low quality, lowres, messy,  ugly, disfigured, bad anatomy, draft, deformed hands, fused fingers, signature, text, multi views"
+      ]
+    },
+    {
+      "id": 22,
+      "type": "SaveSVG",
+      "pos": [
+        2220,
+        380
+      ],
+      "size": [
+        220,
+        100
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "svg_strings",
+          "type": "LIST",
+          "link": 25,
+          "label": "svg_strings"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveSVG"
+      },
+      "widgets_values": [
+        "ComfyUI_SVG",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 35,
+      "type": "CheckpointLoaderSimple",
+      "pos": [
+        -20,
+        380
+      ],
+      "size": [
+        400,
+        100
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            31
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "模型"
+        },
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            48,
+            49
+          ],
+          "shape": 3,
+          "slot_index": 1,
+          "label": "CLIP"
+        },
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            39
+          ],
+          "shape": 3,
+          "slot_index": 2,
+          "label": "VAE"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CheckpointLoaderSimple"
+      },
+      "widgets_values": [
+        "SD3\\sd3_medium_incl_clips.safetensors"
+      ]
+    },
+    {
+      "id": 38,
+      "type": "PreviewBridge",
+      "pos": [
+        1280,
+        380
+      ],
+      "size": [
+        320,
+        300
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 46,
+          "label": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            47
+          ],
+          "shape": 3,
+          "label": "图像",
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "shape": 3,
+          "label": "遮罩"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "PreviewBridge"
+      },
+      "widgets_values": [
+        "$38-0"
+      ]
+    },
+    {
+      "id": 21,
+      "type": "ConvertRasterToVector",
+      "pos": [
+        1980,
+        380
+      ],
+      "size": [
+        220,
+        300
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 76,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": [
+            25
+          ],
+          "shape": 3,
+          "label": "LIST",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConvertRasterToVector"
+      },
+      "widgets_values": [
+        "color",
+        "stacked",
+        "spline",
+        4,
+        6,
+        16,
+        60,
+        4,
+        10,
+        45,
+        3
+      ]
+    },
+    {
+      "id": 19,
+      "type": "Image Rembg (Remove Background)",
+      "pos": [
+        1640,
+        380
+      ],
+      "size": [
+        320,
+        260
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 47,
+          "label": "图像"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [
+            76,
+            77
+          ],
+          "shape": 3,
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "Image Rembg (Remove Background)"
+      },
+      "widgets_values": [
+        true,
+        "isnet-anime",
+        false,
+        false,
+        false,
+        240,
+        10,
+        10,
+        "none"
+      ]
+    },
+    {
+      "id": 48,
+      "type": "SaveImage",
+      "pos": [
+        1640,
+        680
+      ],
+      "size": [
+        320,
+        280
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 77,
+          "label": "图像"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "SaveImage"
+      },
+      "widgets_values": [
+        "ComfyUI"
+      ]
+    },
+    {
+      "id": 32,
+      "type": "EmptySD3LatentImage",
+      "pos": [
+        160,
+        520
+      ],
+      "size": {
+        "0": 220,
+        "1": 106
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            44
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "LATENT"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptySD3LatentImage"
+      },
+      "widgets_values": [
+        1024,
+        1024,
+        1
+      ]
+    },
+    {
+      "id": 24,
+      "type": "CLIPTextEncode",
+      "pos": [
+        440,
+        500
+      ],
+      "size": {
+        "0": 400,
+        "1": 220
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 48,
+          "label": "CLIP"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "CONDITIONING",
+          "type": "CONDITIONING",
+          "links": [
+            42
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "条件"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPTextEncode"
+      },
+      "widgets_values": [
+        "flat illustration, pair of shoes, peach color background, by Adrian Tomine"
+      ]
+    },
+    {
+      "id": 36,
+      "type": "KSampler",
+      "pos": [
+        880,
+        380
+      ],
+      "size": [
+        220,
+        260
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 41,
+          "label": "模型"
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 42,
+          "label": "正面条件"
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 52,
+          "label": "负面条件"
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 44,
+          "label": "Latent"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            38
+          ],
+          "shape": 3,
+          "slot_index": 0,
+          "label": "Latent"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        763482007024129,
+        "fixed",
+        28,
+        4.5,
+        "dpmpp_2m",
+        "sgm_uniform",
+        1
+      ]
+    }
+  ],
+  "links": [
+    [
+      25,
+      21,
+      0,
+      22,
+      0,
+      "LIST"
+    ],
+    [
+      31,
+      35,
+      0,
+      26,
+      0,
+      "MODEL"
+    ],
+    [
+      38,
+      36,
+      0,
+      33,
+      0,
+      "LATENT"
+    ],
+    [
+      39,
+      35,
+      2,
+      33,
+      1,
+      "VAE"
+    ],
+    [
+      41,
+      26,
+      0,
+      36,
+      0,
+      "MODEL"
+    ],
+    [
+      42,
+      24,
+      0,
+      36,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      44,
+      32,
+      0,
+      36,
+      3,
+      "LATENT"
+    ],
+    [
+      46,
+      33,
+      0,
+      38,
+      0,
+      "IMAGE"
+    ],
+    [
+      47,
+      38,
+      0,
+      19,
+      0,
+      "IMAGE"
+    ],
+    [
+      48,
+      35,
+      1,
+      24,
+      0,
+      "CLIP"
+    ],
+    [
+      49,
+      35,
+      1,
+      31,
+      0,
+      "CLIP"
+    ],
+    [
+      52,
+      31,
+      0,
+      36,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      76,
+      19,
+      0,
+      21,
+      0,
+      "IMAGE"
+    ],
+    [
+      77,
+      19,
+      0,
+      48,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6588450000000093,
+      "offset": [
+        -311.4302663398564,
+        25.544650420863906
+      ]
+    },
+    "groupNodes": {}
+  },
+  "version": 0.4
+}
