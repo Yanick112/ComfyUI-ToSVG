@@ -7,12 +7,12 @@ Welcome to the unofficial implementation of the ComfyUI for VTracer. This projec
 
 ### Partial Parameter Description
 
-Filter Speckle (Cleaner)
-Color Precision (More accurate)
-Gradient Step (Less layers)
-Corner Threshold (Smoother)
-Segment Length (More coarse)
-Splice Threshold (Less accurate)
+- Filter Speckle (Cleaner)
+- Color Precision (More accurate)
+- Gradient Step (Less layers)
+- Corner Threshold (Smoother)
+- Segment Length (More coarse)
+- Splice Threshold (Less accurate)
 
 
 ### Features
