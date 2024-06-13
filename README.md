@@ -35,9 +35,7 @@ Welcome to the unofficial implementation of the ComfyUI for VTracer. This projec
 
 - [ ] Add SVG preview node
 
-### Contributing
 
-Contributions to this project are welcome. Please feel free to submit pull requests or create issues for any bugs or feature requests.
 
 ---
 
