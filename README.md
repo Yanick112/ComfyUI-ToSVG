@@ -1,5 +1,5 @@
 # ComfyUI-ToSVG
-Huge thanks to visioncortex for this amazing thing! Original repository:https://github.com/visioncortex/vtracer
+Huge thanks to visioncortex for this amazing thing! Original repository: https://github.com/visioncortex/vtracer
 
 ## VTracer ComfyUI Non-Official Implementation
 
