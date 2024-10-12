@@ -1,5 +1,8 @@
 # ComfyUI-ToSVG
+
 Huge thanks to visioncortex for this amazing thing! Original repository: https://github.com/visioncortex/vtracer
+
+- ![截图_20240613204507](examples/20241012_111028_265.png)
 
 ## VTracer ComfyUI Non-Official Implementation
 
@@ -9,11 +12,13 @@ Welcome to the unofficial implementation of the ComfyUI for VTracer. This projec
 
 1. Navigate to your `/ComfyUI/custom_nodes/` folder.
 2. Run the following command to clone the repository:
+
 ```shell
 git clone https://github.com/Yanick112/ComfyUI-ToSVG/
 ```
 
 4. Navigate to your `ComfyUI-ToSVG` folder.
+
 - For Portable/venv:
 - Run the following command:
   ```shell
@@ -27,8 +32,6 @@ git clone https://github.com/Yanick112/ComfyUI-ToSVG/
 
 Enjoy setting up your ComfyUI-ToSVG tool! If you encounter any issues or need further help, feel free to reach out.
 
-
-
 ### Partial Parameter Description
 
 - Filter Speckle (Cleaner)
@@ -38,7 +41,6 @@ Enjoy setting up your ComfyUI-ToSVG tool! If you encounter any issues or need fu
 - Segment Length (More coarse)
 - Splice Threshold (Less accurate)
 
-
 ### Features
 
 - Converts images to RGBA format if necessary
@@ -47,19 +49,9 @@ Enjoy setting up your ComfyUI-ToSVG tool! If you encounter any issues or need fu
 - node `ConvertRasterToVector` to handle the conversion of raster images to SVG format with various parameters for customization.
 - node `SaveSVG` to save the resulting SVG data into files.
 
-
-### Workflow screenshot
-
-- ![截图_20240613204507](examples/截图_20240613204507.png)
-- ![截图_20240613204541](examples/截图_20240613204541.png)
-- ![截图_20240613204644](examples/截图_20240613204644.png)
-
-
 ### What's next?
 
 - [ ] Add SVG preview node
-
-
 
 ---
 
