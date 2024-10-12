@@ -51,8 +51,8 @@ Enjoy setting up your ComfyUI-ToSVG tool! If you encounter any issues or need fu
 
 ### What's next?
 
-- [·] Add SVG preview node
-- [·] Color and BW mode split
+- [x] Add SVG preview node
+- [x] Color and BW mode split
 
 ---
 
