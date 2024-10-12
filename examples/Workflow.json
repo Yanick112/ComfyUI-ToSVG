@@ -1,0 +1,412 @@
+{
+  "last_node_id": 9,
+  "last_link_id": 8,
+  "nodes": [
+    {
+      "id": 6,
+      "type": "SaveSVG",
+      "pos": {
+        "0": 968,
+        "1": 732
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "svg_strings",
+          "type": "LIST",
+          "link": 4,
+          "label": "svg_strings"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveSVG"
+      },
+      "widgets_values": [
+        "ComfyUI_SVG",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 9,
+      "type": "PreviewImage",
+      "pos": {
+        "0": 1341,
+        "1": 283
+      },
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 8,
+          "label": "images"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 5,
+      "type": "PreviewImage",
+      "pos": {
+        "0": 1346,
+        "1": 616
+      },
+      "size": [
+        210,
+        246
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 3,
+          "label": "images"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage"
+      }
+    },
+    {
+      "id": 3,
+      "type": "LoadImage",
+      "pos": {
+        "0": 192,
+        "1": 275
+      },
+      "size": [
+        315,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            1,
+            5
+          ],
+          "label": "IMAGE",
+          "slot_index": 0
+        },
+        {
+          "name": "MASK",
+          "type": "MASK",
+          "links": null,
+          "label": "MASK"
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "yanick_113_just_pure_cuteness_and_nothing_else_but_cuteness_T_cd5200d8-0281-46bc-a140-1b526ddfe2f2_1.png",
+        "image"
+      ]
+    },
+    {
+      "id": 1,
+      "type": "ConvertRasterToVectorColor",
+      "pos": {
+        "0": 580,
+        "1": 270
+      },
+      "size": {
+        "0": 340.20001220703125,
+        "1": 274
+      },
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": [
+            6,
+            7
+          ],
+          "label": "LIST",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConvertRasterToVectorColor"
+      },
+      "widgets_values": [
+        "stacked",
+        "spline",
+        4,
+        6,
+        16,
+        60,
+        4,
+        10,
+        45,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "type": "ConvertRasterToVectorBW",
+      "pos": {
+        "0": 588,
+        "1": 643
+      },
+      "size": {
+        "0": 315,
+        "1": 154
+      },
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 1,
+          "label": "image"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LIST",
+          "type": "LIST",
+          "links": [
+            2,
+            4
+          ],
+          "label": "LIST",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConvertRasterToVectorBW"
+      },
+      "widgets_values": [
+        "spline",
+        4,
+        60,
+        4,
+        45
+      ]
+    },
+    {
+      "id": 7,
+      "type": "ConvertVectorToRaster",
+      "pos": {
+        "0": 991,
+        "1": 284
+      },
+      "size": {
+        "0": 277.20001220703125,
+        "1": 26
+      },
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "svg_strings",
+          "type": "LIST",
+          "link": 6,
+          "label": "svg_strings"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ],
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConvertVectorToRaster"
+      }
+    },
+    {
+      "id": 8,
+      "type": "SaveSVG",
+      "pos": {
+        "0": 983,
+        "1": 385
+      },
+      "size": {
+        "0": 315,
+        "1": 106
+      },
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "svg_strings",
+          "type": "LIST",
+          "link": 7,
+          "label": "svg_strings"
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "SaveSVG"
+      },
+      "widgets_values": [
+        "ComfyUI_SVG",
+        true,
+        ""
+      ]
+    },
+    {
+      "id": 4,
+      "type": "ConvertVectorToRaster",
+      "pos": {
+        "0": 972,
+        "1": 640
+      },
+      "size": {
+        "0": 277.20001220703125,
+        "1": 26
+      },
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "svg_strings",
+          "type": "LIST",
+          "link": 2,
+          "label": "svg_strings"
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            3
+          ],
+          "label": "IMAGE",
+          "slot_index": 0
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "ConvertVectorToRaster"
+      }
+    }
+  ],
+  "links": [
+    [
+      1,
+      3,
+      0,
+      2,
+      0,
+      "IMAGE"
+    ],
+    [
+      2,
+      2,
+      0,
+      4,
+      0,
+      "LIST"
+    ],
+    [
+      3,
+      4,
+      0,
+      5,
+      0,
+      "IMAGE"
+    ],
+    [
+      4,
+      2,
+      0,
+      6,
+      0,
+      "LIST"
+    ],
+    [
+      5,
+      3,
+      0,
+      1,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      1,
+      0,
+      7,
+      0,
+      "LIST"
+    ],
+    [
+      7,
+      1,
+      0,
+      8,
+      0,
+      "LIST"
+    ],
+    [
+      8,
+      7,
+      0,
+      9,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.8954302432553057,
+      "offset": [
+        -68.58408775957353,
+        -60.800600936531914
+      ]
+    }
+  },
+  "version": 0.4
+}
