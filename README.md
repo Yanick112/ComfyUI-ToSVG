@@ -2,7 +2,7 @@
 
 Huge thanks to visioncortex for this amazing thing! Original repository: https://github.com/visioncortex/vtracer
 
-- ![截图_20240613204507](examples/20241012_111028_265.png)
+![截图_20240613204507](examples/20241012_111028_265.png)
 
 ## VTracer ComfyUI Non-Official Implementation
 
@@ -51,7 +51,8 @@ Enjoy setting up your ComfyUI-ToSVG tool! If you encounter any issues or need fu
 
 ### What's next?
 
-- [ ] Add SVG preview node
+- [·] Add SVG preview node
+- [·] Color and BW mode split
 
 ---
 
