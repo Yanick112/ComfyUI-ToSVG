@@ -1,12 +1,16 @@
 from .svgnode import *
 
 NODE_CLASS_MAPPINGS = {
-    "ConvertRasterToVector": ConvertRasterToVector,
+    "ConvertRasterToVectorColor": ConvertRasterToVectorColor,
+    "ConvertRasterToVectorBW": ConvertRasterToVectorBW,
+    "ConvertVectorToRaster": ConvertVectorToRaster,
     "SaveSVG": SaveSVG
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "ConvertRasterToVector": "Raster to Vector (SVG)",
+    "ConvertRasterToVectorColor": "Raster to Vector (SVG)Color",
+    "ConvertRasterToVectorBW": "Raster to Vector (SVG)BW",
+    "ConvertVectorToRaster": "Vector to Raster (SVG)",
     "SaveSVG": "Save SVG"
 }
 

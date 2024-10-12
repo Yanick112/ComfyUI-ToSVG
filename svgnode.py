@@ -6,34 +6,34 @@ import numpy as np
 from PIL import Image
 from typing import List, Tuple
 import torch
+from io import BytesIO
+import fitz
 
-def RGB2RGBA(image:Image, mask:Image) -> Image:
-    (R, G, B) = image.convert('RGB').split()
-    return Image.merge('RGBA', (R, G, B, mask.convert('L')))
 
-def pil2tensor(image:Image) -> torch.Tensor:
+# Tensor to PIL
+def tensor2pil(image):
+    return Image.fromarray(np.clip(255. * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
+
+# PIL to Tensor
+def pil2tensor(image):
     return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
 
-def tensor2pil(t_image: torch.Tensor)  -> Image:
-    return Image.fromarray(np.clip(255.0 * t_image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
-
-class ConvertRasterToVector:
+class ConvertRasterToVectorColor:
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
                 "image": ("IMAGE",),
-                "colormode": (["color", "binary"], {"default": "color"}),
                 "hierarchical": (["stacked", "cutout"], {"default": "stacked"}),
                 "mode": (["spline", "polygon", "none"], {"default": "spline"}),
-                "filter_speckle": ("INT", {"default": 4, "min": 0, "max": 100}),
-                "color_precision": ("INT", {"default": 6, "min": 0, "max": 10}),
-                "layer_difference": ("INT", {"default": 16, "min": 0, "max": 256}),
-                "corner_threshold": ("INT", {"default": 60, "min": 0, "max": 180}),
-                "length_threshold": ("FLOAT", {"default": 4.0, "min": 0.0, "max": 10.0}),
-                "max_iterations": ("INT", {"default": 10, "min": 1, "max": 70}),
-                "splice_threshold": ("INT", {"default": 45, "min": 0, "max": 180}),
-                "path_precision": ("INT", {"default": 3, "min": 0, "max": 10}),
+                "filter_speckle": ("INT", {"default": 4, "min": 0, "max": 100, "step": 1}),
+                "color_precision": ("INT", {"default": 6, "min": 0, "max": 10, "step": 1}),
+                "layer_difference": ("INT", {"default": 16, "min": 0, "max": 256, "step": 1}),
+                "corner_threshold": ("INT", {"default": 60, "min": 0, "max": 180, "step": 1}),
+                "length_threshold": ("FLOAT", {"default": 4.0, "min": 0.0, "max": 10.0, "step": 0.1}),
+                "max_iterations": ("INT", {"default": 10, "min": 1, "max": 70, "step": 1}),
+                "splice_threshold": ("INT", {"default": 45, "min": 0, "max": 180, "step": 1}),
+                "path_precision": ("INT", {"default": 3, "min": 0, "max": 10, "step": 1}),
             }
         }
 
@@ -42,28 +42,26 @@ class ConvertRasterToVector:
 
     CATEGORY = "💎TOSVG"
 
-    def convert_to_svg(self, image, colormode, hierarchical, mode, filter_speckle, color_precision, layer_difference, corner_threshold, length_threshold, max_iterations, splice_threshold, path_precision):
+    def convert_to_svg(self, image, hierarchical, mode, filter_speckle, color_precision, layer_difference, corner_threshold,
+                       length_threshold, max_iterations, splice_threshold, path_precision):
         
-        svg_strings = []  
+        svg_strings = []
 
         for i in image:
             i = torch.unsqueeze(i, 0)
-            _image = tensor2pil(i) 
+            _image = tensor2pil(i)
             
             if _image.mode != 'RGBA':
-                alpha = Image.new('L', _image.size, 255)  
-                _image.putalpha(alpha)  
-                       
-            
+                alpha = Image.new('L', _image.size, 255)
+                _image.putalpha(alpha)
+
             pixels = list(_image.getdata())
-
             size = _image.size
-
 
             svg_str = vtracer.convert_pixels_to_svg(
                 pixels,
                 size=size,
-                colormode=colormode,
+                colormode="color",
                 hierarchical=hierarchical,
                 mode=mode,
                 filter_speckle=filter_speckle,
@@ -73,18 +71,89 @@ class ConvertRasterToVector:
                 length_threshold=length_threshold,
                 max_iterations=max_iterations,
                 splice_threshold=splice_threshold,
-                path_precision=path_precision
+                path_precision=path_precision,
             )
-
             
             svg_strings.append(svg_str)
 
-        return (svg_strings,)  
+        return (svg_strings,)
+
+class ConvertRasterToVectorBW:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "mode": (["spline", "polygon", "none"], {"default": "spline"}),
+                "filter_speckle": ("INT", {"default": 4, "min": 0, "max": 100, "step": 1}),
+                "corner_threshold": ("INT", {"default": 60, "min": 0, "max": 180, "step": 1}),
+                "length_threshold": ("FLOAT", {"default": 4.0, "min": 0.0, "max": 10.0, "step": 0.1}),
+                "splice_threshold": ("INT", {"default": 45, "min": 0, "max": 180, "step": 1}),
+            }
+        }
+
+    RETURN_TYPES = ("LIST",)
+    FUNCTION = "convert_to_svg"
+
+    CATEGORY = "💎TOSVG"
+
+    def convert_to_svg(self, image, mode, filter_speckle, corner_threshold, length_threshold, splice_threshold):
+        
+        svg_strings = []
+
+        for i in image:
+            i = torch.unsqueeze(i, 0)
+            _image = tensor2pil(i)
+            
+            if _image.mode != 'RGBA':
+                alpha = Image.new('L', _image.size, 255)
+                _image.putalpha(alpha)
+
+            pixels = list(_image.getdata())
+            size = _image.size
+
+            svg_str = vtracer.convert_pixels_to_svg(
+                pixels,
+                size=size,
+                colormode="binary",
+                mode=mode,
+                filter_speckle=filter_speckle,
+                corner_threshold=corner_threshold,
+                length_threshold=length_threshold,
+                splice_threshold=splice_threshold,
+            )
+            
+            svg_strings.append(svg_str)
+
+        return (svg_strings,)
 
 
+class ConvertVectorToRaster:
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "svg_strings": ("LIST", {"forceInput": True})
+            }
+        }
 
+    RETURN_TYPES = ("IMAGE",)
+    FUNCTION = "convert_svg_to_image"
+    CATEGORY = "💎TOSVG"
 
+    def convert_svg_to_image(self, svg_strings):
 
+        for svg_string in svg_strings:
+            doc = fitz.open(stream=svg_string.encode('utf-8'), filetype="svg")
+            page = doc.load_page(0)
+            pix = page.get_pixmap()
+
+            image_data = pix.tobytes("png")
+            pil_image = Image.open(BytesIO(image_data)).convert("RGB")
+
+        return (pil2tensor(pil_image),)
+    
+    
 class SaveSVG:
     def __init__(self):
         self.output_dir = folder_paths.get_output_directory()
