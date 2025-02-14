@@ -10,6 +10,14 @@ from io import BytesIO
 import fitz
 
 
+import numpy as np
+import torch
+import random
+import folder_paths
+
+from PIL import Image
+from nodes import SaveImage
+
 # Tensor to PIL
 def tensor2pil(image):
     return Image.fromarray(np.clip(255. * image.cpu().numpy().squeeze(), 0, 255).astype(np.uint8))
@@ -37,7 +45,8 @@ class ConvertRasterToVectorColor:
             }
         }
 
-    RETURN_TYPES = ("LIST",)
+    RETURN_TYPES = ("STRING",)
+    OUTPUT_IS_LIST = (True,)
     FUNCTION = "convert_to_svg"
 
     CATEGORY = "💎TOSVG"
@@ -92,7 +101,8 @@ class ConvertRasterToVectorBW:
             }
         }
 
-    RETURN_TYPES = ("LIST",)
+    RETURN_TYPES = ("STRING",)
+    OUTPUT_IS_LIST = (True,)
     FUNCTION = "convert_to_svg"
 
     CATEGORY = "💎TOSVG"
@@ -133,7 +143,7 @@ class ConvertVectorToRaster:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "svg_strings": ("LIST", {"forceInput": True})
+                "svg_strings": ("STRING", {"forceInput": True})
             }
         }
 
@@ -143,13 +153,12 @@ class ConvertVectorToRaster:
 
     def convert_svg_to_image(self, svg_strings):
 
-        for svg_string in svg_strings:
-            doc = fitz.open(stream=svg_string.encode('utf-8'), filetype="svg")
-            page = doc.load_page(0)
-            pix = page.get_pixmap()
+        doc = fitz.open(stream=svg_strings.encode('utf-8'), filetype="svg")
+        page = doc.load_page(0)
+        pix = page.get_pixmap()
 
-            image_data = pix.tobytes("png")
-            pil_image = Image.open(BytesIO(image_data)).convert("RGB")
+        image_data = pix.tobytes("png")
+        pil_image = Image.open(BytesIO(image_data)).convert("RGB")
 
         return (pil2tensor(pil_image),)
     
@@ -162,7 +171,7 @@ class SaveSVG:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "svg_strings": ("LIST", {"forceInput": True}),              
+                "svg_strings": ("STRING", {"forceInput": True}),              
                 "filename_prefix": ("STRING", {"default": "ComfyUI_SVG"}),
             },
             "optional": {
@@ -173,7 +182,6 @@ class SaveSVG:
 
     CATEGORY = "💎TOSVG"
     DESCRIPTION = "Save SVG data to a file."
-
     RETURN_TYPES = ()
     OUTPUT_NODE = True
     FUNCTION = "save_svg_file"
@@ -190,21 +198,48 @@ class SaveSVG:
         output_path = custom_output_path if custom_output_path else self.output_dir
         os.makedirs(output_path, exist_ok=True)
         
-        ui_info_list = []  
+        unique_filename = self.generate_unique_filename(f"{filename_prefix}", append_timestamp)
+        final_filepath = os.path.join(output_path, unique_filename)
+            
+            
+        with open(final_filepath, "w") as svg_file:
+            svg_file.write(svg_strings)
+            
+            
+        ui_info = {"ui": {"saved_svg": unique_filename, "path": final_filepath}}
 
-        for index, svg_string in enumerate(svg_strings):
-            
-            unique_filename = self.generate_unique_filename(f"{filename_prefix}_{index}", append_timestamp)
-            final_filepath = os.path.join(output_path, unique_filename)
-            
-            
-            with open(final_filepath, "w") as svg_file:
-                svg_file.write(svg_string)
-            
-            
-            ui_info = {"ui": {"saved_svg": unique_filename, "path": final_filepath}}
-            ui_info_list.append(ui_info)
-
-        return ui_info_list
+        return ui_info
 
 
+
+
+class SVGPreview(SaveImage):
+    @classmethod
+    def INPUT_TYPES(s):
+        return {
+            "required": {
+                "svg_strings": ("STRING", {"forceInput": True})
+            }
+        }
+
+    FUNCTION = "svg_preview"
+    CATEGORY = "💎TOSVG"
+    OUTPUT_NODE = True
+
+    def __init__(self):
+        self.output_dir = folder_paths.get_temp_directory()
+        self.type = "temp"
+        self.prefix_append = "_temp_" + ''.join(random.choice("abcdefghijklmnopqrstupvxyz1234567890") for x in range(5))
+        self.compress_level = 4
+
+    def svg_preview(self, svg_strings):
+        doc = fitz.open(stream=svg_strings.encode('utf-8'), filetype="svg")
+        page = doc.load_page(0)
+        pix = page.get_pixmap()
+
+        image_data = pix.tobytes("png")
+        pil_image = Image.open(BytesIO(image_data)).convert("RGB")
+
+        preview = pil2tensor(pil_image)
+
+        return self.save_images(preview, "PointPreview")
