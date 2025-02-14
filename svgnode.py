@@ -8,10 +8,6 @@ from typing import List, Tuple
 import torch
 from io import BytesIO
 import fitz
-
-
-import numpy as np
-import torch
 import random
 import folder_paths
 
