@@ -3,3 +3,4 @@ numpy
 Pillow
 torch
 PyMuPDF
+potracer

@@ -1,0 +1,638 @@
+{
+  "id": "fd87519e-4b4d-4a9a-9516-9e1ba29ea4a9",
+  "revision": 0,
+  "last_node_id": 14,
+  "last_link_id": 12,
+  "nodes": [
+    {
+      "id": 8,
+      "type": "TS_ImageToSVGStringBW_Vtracer",
+      "pos": [
+        1550,
+        425
+      ],
+      "size": [
+        307.6441345214844,
+        154
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 6
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_ImageToSVGStringBW_Vtracer"
+      },
+      "widgets_values": [
+        "spline",
+        4,
+        60,
+        4,
+        45
+      ]
+    },
+    {
+      "id": 7,
+      "type": "TS_ImageToSVGStringColor_Vtracer",
+      "pos": [
+        1550,
+        100
+      ],
+      "size": [
+        318.5474548339844,
+        274
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 5
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "shape": 6,
+          "type": "STRING",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_ImageToSVGStringColor_Vtracer"
+      },
+      "widgets_values": [
+        "stacked",
+        "spline",
+        4,
+        6,
+        16,
+        60,
+        4,
+        10,
+        45,
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "type": "TS_SVGPathSimplify",
+      "pos": [
+        1900,
+        100
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGPathSimplify"
+      },
+      "widgets_values": [
+        5,
+        false
+      ]
+    },
+    {
+      "id": 9,
+      "type": "TS_SVGStringToImage",
+      "pos": [
+        1925,
+        425
+      ],
+      "size": [
+        168.29257202148438,
+        26
+      ],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 1
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            10
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGStringToImage"
+      }
+    },
+    {
+      "id": 6,
+      "type": "TS_ImageQuantize",
+      "pos": [
+        1150,
+        450
+      ],
+      "size": [
+        270,
+        82
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            5,
+            6,
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_ImageQuantize"
+      },
+      "widgets_values": [
+        16,
+        "Clear"
+      ]
+    },
+    {
+      "id": 13,
+      "type": "LoadImage",
+      "pos": [
+        825,
+        450
+      ],
+      "size": [
+        270,
+        314
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "label": "IMAGE",
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            11
+          ]
+        },
+        {
+          "label": "MASK",
+          "name": "MASK",
+          "type": "MASK",
+          "links": null
+        }
+      ],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41",
+        "Node name for S&R": "LoadImage"
+      },
+      "widgets_values": [
+        "0_1 (1).jpg",
+        "image"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "TS_SVGStringToSVGBytesIO",
+      "pos": [
+        1900,
+        725
+      ],
+      "size": [
+        212.63046264648438,
+        26
+      ],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "label": "SVG",
+          "name": "SVG",
+          "type": "SVG",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGStringToSVGBytesIO"
+      }
+    },
+    {
+      "id": 11,
+      "type": "TS_ImageToSVGStringBW_Potracer",
+      "pos": [
+        1550,
+        725
+      ],
+      "size": [
+        315.4302673339844,
+        322
+      ],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "image",
+          "name": "image",
+          "type": "IMAGE",
+          "link": 7
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_ImageToSVGStringBW_Potracer"
+      },
+      "widgets_values": [
+        128,
+        "Black on White",
+        "minority",
+        2,
+        1,
+        false,
+        0.2,
+        true,
+        {},
+        {},
+        {},
+        0
+      ]
+    },
+    {
+      "id": 1,
+      "type": "TS_SaveSVGString",
+      "pos": [
+        2425,
+        725
+      ],
+      "size": [
+        272.744140625,
+        106
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 9
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SaveSVGString"
+      },
+      "widgets_values": [
+        {},
+        true,
+        {}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "TS_SVGStringPreview",
+      "pos": [
+        2200,
+        100
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 4
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGStringPreview"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 12,
+      "type": "PreviewImage",
+      "pos": [
+        2175,
+        400
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "images",
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "comfy-core",
+        "ver": "0.3.41",
+        "Node name for S&R": "PreviewImage"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 4,
+      "type": "TS_SVGBytesIOToString",
+      "pos": [
+        2150,
+        725
+      ],
+      "size": [
+        212.63046264648438,
+        26
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_BytesIO",
+          "name": "SVG_BytesIO",
+          "type": "SVG",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "label": "STRING",
+          "name": "STRING",
+          "type": "STRING",
+          "links": [
+            9,
+            12
+          ]
+        }
+      ],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGBytesIOToString"
+      }
+    },
+    {
+      "id": 14,
+      "type": "TS_SVGStringPreview",
+      "pos": [
+        2425,
+        900
+      ],
+      "size": [
+        210,
+        258
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "label": "SVG_String",
+          "name": "SVG_String",
+          "type": "STRING",
+          "link": 12
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "cnr_id": "ComfyUI-ToSVG",
+        "ver": "2626a6cc885a23e973715b5b5baf37799a7d3d41",
+        "Node name for S&R": "TS_SVGStringPreview"
+      },
+      "widgets_values": []
+    }
+  ],
+  "links": [
+    [
+      1,
+      8,
+      0,
+      9,
+      0,
+      "STRING"
+    ],
+    [
+      2,
+      11,
+      0,
+      3,
+      0,
+      "STRING"
+    ],
+    [
+      3,
+      7,
+      0,
+      5,
+      0,
+      "STRING"
+    ],
+    [
+      4,
+      5,
+      0,
+      2,
+      0,
+      "STRING"
+    ],
+    [
+      5,
+      6,
+      0,
+      7,
+      0,
+      "IMAGE"
+    ],
+    [
+      6,
+      6,
+      0,
+      8,
+      0,
+      "IMAGE"
+    ],
+    [
+      7,
+      6,
+      0,
+      11,
+      0,
+      "IMAGE"
+    ],
+    [
+      8,
+      3,
+      0,
+      4,
+      0,
+      "SVG"
+    ],
+    [
+      9,
+      4,
+      0,
+      1,
+      0,
+      "STRING"
+    ],
+    [
+      10,
+      9,
+      0,
+      12,
+      0,
+      "IMAGE"
+    ],
+    [
+      11,
+      13,
+      0,
+      6,
+      0,
+      "IMAGE"
+    ],
+    [
+      12,
+      4,
+      0,
+      14,
+      0,
+      "STRING"
+    ]
+  ],
+  "groups": [],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.6934334949441344,
+      "offset": [
+        468.60443938760835,
+        382.7150165816723
+      ]
+    },
+    "frontendVersion": "1.21.7",
+    "VHS_latentpreview": false,
+    "VHS_latentpreviewrate": 0,
+    "VHS_MetadataImage": true,
+    "VHS_KeepIntermediate": true
+  },
+  "version": 0.4
+}

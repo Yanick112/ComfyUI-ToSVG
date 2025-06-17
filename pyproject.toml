@@ -1,9 +1,9 @@
 [project]
 name = "comfyui-tosvg"
-description = "This project converts raster images into SVG format using the [a/VTracer](https://github.com/visioncortex/vtracer) library. It's a handy tool for designers and developers who need to work with vector graphics programmatically."
+description = "This project converts raster images into SVG format using the [a/VTracer](https://github.com/visioncortex/vtracer) library and [a/Potracer](https://github.com/tatarize/potrace). It's a handy tool for designers and developers who need to work with vector graphics programmatically."
 version = "1.0.1"
 license = { file = "LICENSE" }
-dependencies = ["numpy", "Pillow", "torch", "vtracer"]
+dependencies = ["numpy", "Pillow", "torch", "vtracer", "potracer", "PyMuPDF"]
 
 [project.urls]
 Repository = "https://github.com/Yanick112/ComfyUI-ToSVG"

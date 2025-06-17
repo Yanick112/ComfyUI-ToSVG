@@ -1,8 +1,8 @@
 # ComfyUI-ToSVG
 
-Huge thanks to visioncortex for this amazing thing! Original repository: https://github.com/visioncortex/vtracer
+Huge thanks to visioncortex and potracer for this amazing thing! Original repository: https://github.com/visioncortex/vtracer and https://github.com/tatarize/potrace
 
-![截图_20240613204507](examples/20241012_111028_265.png)
+![截图_20240613204507](examples\workflow_20250618_000738.png)
 
 
 
@@ -10,10 +10,13 @@ Huge thanks to visioncortex for this amazing thing! Original repository: https:/
 ### 06-17
 
 - This update is a destructive update. Please check carefully in the production environment!
-
-- This update mainly coordinates with new SVG types introduced by ComfyUI and adjusts class naming methods to avoid conflicts with native ComfyUI nodes while adding nodes for mutual conversion with ComfyUI types.
-
-
+- Rename nodes to avoid conflicts
+- Add new nodes
+  - `Image Quantize`
+  - `SVG String to SVG BytesIO`
+  - `SVG BytesIO to SVG String`
+  - `SVG String Path Simplify`
+  - `Image to SVG String BW_Potracer`(thanks@ImagineerNL, Optimized integration based on his work)
 
 ## VTracer ComfyUI Non-Official Implementation
 
