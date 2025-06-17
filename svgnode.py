@@ -3,15 +3,14 @@ import os
 import time
 import folder_paths
 import numpy as np
-from PIL import Image
-from typing import List, Tuple
 import torch
-from io import BytesIO
 import fitz
 import random
 import folder_paths
 
+from io import BytesIO
 from PIL import Image
+from comfy_extras.nodes_images import SVG
 from nodes import SaveImage
 
 # Tensor to PIL
@@ -22,7 +21,7 @@ def tensor2pil(image):
 def pil2tensor(image):
     return torch.from_numpy(np.array(image).astype(np.float32) / 255.0).unsqueeze(0)
 
-class ConvertRasterToVectorColor:
+class TS_ImageToSVGStringColor:
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -83,7 +82,7 @@ class ConvertRasterToVectorColor:
 
         return (svg_strings,)
 
-class ConvertRasterToVectorBW:
+class TS_ImageToSVGStringBW:
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -134,12 +133,12 @@ class ConvertRasterToVectorBW:
         return (svg_strings,)
 
 
-class ConvertVectorToRaster:
+class TS_SVGStringToImage:
     @classmethod
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "svg_strings": ("STRING", {"forceInput": True})
+                "SVG_String": ("STRING", {"forceInput": True})
             }
         }
 
@@ -147,9 +146,9 @@ class ConvertVectorToRaster:
     FUNCTION = "convert_svg_to_image"
     CATEGORY = "💎TOSVG"
 
-    def convert_svg_to_image(self, svg_strings):
+    def convert_svg_to_image(self, SVG_String):
 
-        doc = fitz.open(stream=svg_strings.encode('utf-8'), filetype="svg")
+        doc = fitz.open(stream=SVG_String.encode('utf-8'), filetype="svg")
         page = doc.load_page(0)
         pix = page.get_pixmap()
 
@@ -159,7 +158,7 @@ class ConvertVectorToRaster:
         return (pil2tensor(pil_image),)
     
     
-class SaveSVG:
+class TS_SaveSVGString:
     def __init__(self):
         self.output_dir = folder_paths.get_output_directory()
 
@@ -167,7 +166,7 @@ class SaveSVG:
     def INPUT_TYPES(cls):
         return {
             "required": {
-                "svg_strings": ("STRING", {"forceInput": True}),              
+                "SVG_String": ("STRING", {"forceInput": True}),              
                 "filename_prefix": ("STRING", {"default": "ComfyUI_SVG"}),
             },
             "optional": {
@@ -189,7 +188,7 @@ class SaveSVG:
         else:
             return f"{prefix}.svg"
 
-    def save_svg_file(self, svg_strings, filename_prefix="ComfyUI_SVG", append_timestamp=True, custom_output_path=""):
+    def save_svg_file(self, SVG_String, filename_prefix="ComfyUI_SVG", append_timestamp=True, custom_output_path=""):
         
         output_path = custom_output_path if custom_output_path else self.output_dir
         os.makedirs(output_path, exist_ok=True)
@@ -199,7 +198,7 @@ class SaveSVG:
             
             
         with open(final_filepath, "w") as svg_file:
-            svg_file.write(svg_strings)
+            svg_file.write(SVG_String)
             
             
         ui_info = {"ui": {"saved_svg": unique_filename, "path": final_filepath}}
@@ -209,12 +208,12 @@ class SaveSVG:
 
 
 
-class SVGPreview(SaveImage):
+class TS_SVGStringPreview(SaveImage):
     @classmethod
     def INPUT_TYPES(s):
         return {
             "required": {
-                "svg_strings": ("STRING", {"forceInput": True})
+                "SVG_String": ("STRING", {"forceInput": True})
             }
         }
 
@@ -228,8 +227,8 @@ class SVGPreview(SaveImage):
         self.prefix_append = "_temp_" + ''.join(random.choice("abcdefghijklmnopqrstupvxyz1234567890") for x in range(5))
         self.compress_level = 4
 
-    def svg_preview(self, svg_strings):
-        doc = fitz.open(stream=svg_strings.encode('utf-8'), filetype="svg")
+    def svg_preview(self, SVG_String):
+        doc = fitz.open(stream=SVG_String.encode('utf-8'), filetype="svg")
         page = doc.load_page(0)
         pix = page.get_pixmap()
 
@@ -239,3 +238,73 @@ class SVGPreview(SaveImage):
         preview = pil2tensor(pil_image)
 
         return self.save_images(preview, "PointPreview")
+
+class TS_SVGStringToSVGBytesIO:
+    """
+    将字符串类型的SVG转换为ComfyUI的SVG类型（BytesIO列表）
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "SVG_String": ("STRING", {"forceInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("SVG",)
+    FUNCTION = "convert_string_to_svg"
+    CATEGORY = "💎TOSVG"
+
+    def convert_string_to_svg(self, SVG_String):
+        # 将字符串转换为BytesIO对象
+        svg_bytes = BytesIO(SVG_String.encode('utf-8'))
+        # 返回ComfyUI的SVG类型
+        return (SVG([svg_bytes]),)
+
+class TS_SVGBytesIOToString:
+    """
+    将ComfyUI的SVG类型（BytesIO列表）转换为字符串类型
+    """
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "SVG_BytesIO": ("SVG", {"forceInput": True}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "convert_svg_to_string"
+    CATEGORY = "💎TOSVG"
+
+    def convert_svg_to_string(self, SVG_BytesIO):
+        # 获取第一个BytesIO对象的内容
+        if not SVG_BytesIO.data:
+            return ("",)
+        
+        # 读取BytesIO对象的内容并解码为字符串
+        svg_bytes = SVG_BytesIO.data[0].getvalue()
+        svg_string = svg_bytes.decode('utf-8')
+        
+        return (svg_string,)
+
+
+NODE_CLASS_MAPPINGS = {
+    "TS_ImageToSVGStringColor": TS_ImageToSVGStringColor,
+    "TS_ImageToSVGStringBW": TS_ImageToSVGStringBW,
+    "TS_SVGStringToImage": TS_SVGStringToImage,
+    "TS_SaveSVGString": TS_SaveSVGString,
+    "TS_SVGStringPreview": TS_SVGStringPreview,
+    "TS_SVGStringToSVGBytesIO": TS_SVGStringToSVGBytesIO,
+    "TS_SVGBytesIOToString": TS_SVGBytesIOToString,
+}
+
+NODE_DISPLAY_NAME_MAPPINGS = {
+    "TS_ImageToSVGStringColor": "Image to SVG String Color",
+    "TS_ImageToSVGStringBW": "Image to SVG String BW",
+    "TS_SVGStringToImage": "SVG String to Image",
+    "TS_SaveSVGString": "Save SVG String",
+    "TS_SVGStringPreview": "SVG String Preview",
+    "TS_SVGStringToSVGBytesIO": "SVG String to SVG BytesIO",
+    "TS_SVGBytesIOToString": "SVG BytesIO to SVG String",
+}

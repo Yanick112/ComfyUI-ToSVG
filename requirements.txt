@@ -1,5 +1,5 @@
+vtracer
 numpy
 Pillow
 torch
-vtracer
 PyMuPDF

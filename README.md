@@ -4,6 +4,17 @@ Huge thanks to visioncortex for this amazing thing! Original repository: https:/
 
 ![截图_20240613204507](examples/20241012_111028_265.png)
 
+
+
+## Update
+### 06-17
+
+- This update is a destructive update. Please check carefully in the production environment!
+
+- This update mainly coordinates with new SVG types introduced by ComfyUI and adjusts class naming methods to avoid conflicts with native ComfyUI nodes while adding nodes for mutual conversion with ComfyUI types.
+
+
+
 ## VTracer ComfyUI Non-Official Implementation
 
 Welcome to the unofficial implementation of the ComfyUI for VTracer. This project converts raster images into SVG format using the VTracer library. It's a handy tool for designers and developers who need to work with vector graphics programmatically.
