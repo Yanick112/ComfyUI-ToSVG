@@ -10,6 +10,6 @@ Repository = "https://github.com/Yanick112/ComfyUI-ToSVG"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = "Yanick112"
+PublisherId = "yanick"
 DisplayName = "ComfyUI-ToSVG"
 Icon = ""
