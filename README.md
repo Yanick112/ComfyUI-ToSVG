@@ -2,7 +2,7 @@
 
 Huge thanks to visioncortex and potracer for this amazing thing! Original repository: https://github.com/visioncortex/vtracer and https://github.com/tatarize/potrace
 
-![截图_20240613204507](examples\workflow_20250618_000738.png)
+![截图_20240613204507](examples/workflow_20250618_000738.png)
 
 
 
